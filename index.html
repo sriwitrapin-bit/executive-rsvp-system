@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ลงทะเบียนเข้าร่วมงาน MUIDS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        mahidol: {
+                            navy: '#002466',
+                            gold: '#FDB913',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-[#f0f2f5] min-h-screen p-4 flex justify-center items-start pt-8">
+
+    <div class="w-full max-w-2xl mx-auto bg-white rounded-xl shadow-sm border border-gray-200 p-6 md:p-10">
+        
+        <!-- Header / Title -->
+        <div class="text-center mb-6">
+            <h1 class="text-2xl md:text-3xl font-bold text-mahidol-navy mb-2">แบบฟอร์มตอบรับการเข้าร่วมงาน</h1>
+            <p class="text-base md:text-lg text-gray-800">พิธีเปิดเส้นทางสัญจรแห่งความกลมกลืน<br>Mahidol - MUIDS</p>
+        </div>
+        
+        <div class="dotted-divider"></div>
+
+        <form id="rsvpForm" class="space-y-6">
+            
+            <!-- Section 1: Role -->
+            <div>
+                <label class="block text-gray-800 font-semibold mb-3">1. สถานะผู้ทำรายการ <span class="text-red-500">*</span></label>
+                
+                <label class="option-btn">
+                    <input type="radio" name="userRole" value="self" class="hidden">
+                    <span>ผู้บริหารทำรายการด้วยตนเอง</span>
+                </label>
+                
+                <label class="option-btn">
+                    <input type="radio" name="userRole" value="delegate" class="hidden">
+                    <span>ผู้ประสานงานทำรายการแทน (เลขาฯ)</span>
+                </label>
+            </div>
+
+            <!-- Self Form -->
+            <div id="selfSection" class="hidden-section fade-in space-y-4">
+                <div class="relative">
+                    <label class="block text-sm text-gray-800 font-semibold mb-1">ชื่อ-นามสกุล <span class="text-red-500">*</span></label>
+                    <input type="text" id="selfNameInput" class="card-input relative z-20" placeholder="พิมพ์ชื่อเพื่อค้นหา..." autocomplete="off">
+                    <ul id="execListSelf" class="custom-dropdown hidden-section"></ul>
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-800 font-semibold mb-1">ตำแหน่ง <span class="text-red-500">*</span></label>
+                    <input type="text" id="selfPositionInput" class="card-input bg-gray-50 text-gray-600" readonly>
+                </div>
+
+                <div id="selfOtherDiv" class="hidden-section bg-gray-50 p-4 rounded-lg space-y-3">
+                    <div>
+                        <label class="block text-sm text-gray-800 font-semibold mb-1">ชื่อ-นามสกุล (อื่นๆ) <span class="text-red-500">*</span></label>
+                        <input type="text" id="selfOtherName" class="card-input bg-white">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-800 font-semibold mb-1">ตำแหน่ง (อื่นๆ) <span class="text-red-500">*</span></label>
+                        <input type="text" id="selfOtherPosition" class="card-input bg-white">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm text-gray-800 font-semibold mb-1">เบอร์โทรศัพท์ติดต่อ <span class="text-red-500">*</span></label>
+                    <input type="tel" id="selfPhone" class="card-input" placeholder="08X-XXX-XXXX">
+                </div>
+            </div>
+
+            <!-- Delegate Form -->
+            <div id="delegateSection" class="hidden-section fade-in space-y-4">
+                <div class="relative">
+                    <label class="block text-sm text-gray-800 font-semibold mb-1">รายชื่อผู้บริหารที่ท่านทำรายการแทน (ชื่อ-นามสกุล) <span class="text-red-500">*</span></label>
+                    <input type="text" id="execNameInput" class="card-input relative z-20" placeholder="พิมพ์ชื่อเพื่อค้นหา..." autocomplete="off">
+                    <ul id="execListDelegate" class="custom-dropdown hidden-section"></ul>
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-800 font-semibold mb-1">ตำแหน่งผู้บริหาร <span class="text-red-500">*</span></label>
+                    <input type="text" id="execPositionInput" class="card-input bg-gray-50 text-gray-600" readonly>
+                </div>
+
+                <div id="delegateOtherDiv" class="hidden-section bg-gray-50 p-4 rounded-lg space-y-3">
+                    <div>
+                        <label class="block text-sm text-gray-800 font-semibold mb-1">ชื่อ-นามสกุล ผู้บริหาร (อื่นๆ) <span class="text-red-500">*</span></label>
+                        <input type="text" id="delegateOtherName" class="card-input bg-white">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-800 font-semibold mb-1">ตำแหน่งผู้บริหาร (อื่นๆ) <span class="text-red-500">*</span></label>
+                        <input type="text" id="delegateOtherPosition" class="card-input bg-white">
+                    </div>
+                </div>
+
+                <div class="dotted-divider my-4"></div>
+                <p class="text-sm font-semibold text-mahidol-navy mb-2">ข้อมูลผู้ประสานงาน (เลขาฯ)</p>
+                <div>
+                    <label class="block text-sm text-gray-800 font-semibold mb-1">ชื่อ-นามสกุล ผู้ประสานงาน <span class="text-red-500">*</span></label>
+                    <input type="text" id="coordName" class="card-input" placeholder="ชื่อ-นามสกุล เลขาฯ / เจ้าหน้าที่">
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-800 font-semibold mb-1">เบอร์โทรศัพท์ ผู้ประสานงาน <span class="text-red-500">*</span></label>
+                    <input type="tel" id="coordPhone" class="card-input" placeholder="08X-XXX-XXXX">
+                </div>
+            </div>
+
+            <!-- Email Section -->
+            <div id="emailSection" class="hidden-section fade-in mb-6">
+                <label class="block text-gray-800 font-semibold mb-1">อีเมลสำหรับรับการยืนยัน <span class="text-red-500">*</span></label>
+                <input type="email" id="confirmEmail" placeholder="ระบุอีเมลของท่าน..." class="card-input bg-white" required>
+            </div>
+
+            <div id="divider1" class="dotted-divider hidden-section"></div>
+
+            <!-- Section 2: RSVP Status -->
+            <div id="rsvpSection" class="hidden-section fade-in">
+                <label class="block text-gray-800 font-semibold mb-3">2. การเข้าร่วมงาน <span class="text-red-500">*</span></label>
+                
+                <label class="option-btn text-left px-4">
+                    <input type="radio" name="rsvpStatus" value="attend_self" class="hidden">
+                    <span class="block">มาร่วมงาน (ด้วยตนเอง)</span>
+                </label>
+
+                <label class="option-btn text-left px-4">
+                    <input type="radio" name="rsvpStatus" value="not_attend" class="hidden">
+                    <span class="block">ไม่สามารถมาร่วมงานได้ และไม่ส่งผู้แทน</span>
+                </label>
+                
+                <label class="option-btn text-left px-4">
+                    <input type="radio" name="rsvpStatus" value="attend_rep" class="hidden">
+                    <span class="block">ส่งผู้แทนเข้าร่วม</span>
+                </label>
+
+                <!-- Rep Details -->
+                <div id="repDetailsSection" class="hidden-section bg-gray-50 p-4 rounded-lg mb-3 space-y-3">
+                    <div>
+                        <label class="block text-sm text-gray-800 font-semibold mb-1">ชื่อ-นามสกุล ผู้แทน <span class="text-red-500">*</span></label>
+                        <input type="text" id="repName" class="card-input bg-white">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-800 font-semibold mb-1">ตำแหน่ง ผู้แทน <span class="text-red-500">*</span></label>
+                        <input type="text" id="repPosition" class="card-input bg-white">
+                    </div>
+                </div>
+            </div>
+
+            <div id="divider2" class="dotted-divider hidden-section"></div>
+
+            <!-- Section 3: Logistics -->
+            <div id="logisticsSection" class="hidden-section fade-in space-y-6">
+                <div>
+                    <label class="block text-gray-800 font-semibold mb-2">3. จำนวนผู้เข้าร่วมงาน <span class="text-red-500">*</span></label>
+                    <p class="text-xs text-gray-500 mb-3">รวมผู้บริหาร/ผู้แทน และผู้ติดตาม</p>
+                    <input type="number" id="paxCount" min="1" placeholder="ระบุจำนวน (ท่าน)" class="card-input">
+                </div>
+
+                <div>
+                    <label class="block text-gray-800 font-semibold mb-3">4. วิธีการเดินทาง <span class="text-red-500">*</span></label>
+                    
+                    <label class="option-btn text-left px-4">
+                        <input type="radio" name="transportMethod" value="drive" class="hidden">
+                        <span class="block font-medium">มาร่วมงานด้วยรถส่วนตัว</span>
+                        <span class="block text-xs text-gray-500 mt-1">สามารถจอดรถได้ที่ลานจอดรถ MUIDS</span>
+                    </label>
+
+                    <label class="option-btn text-left px-4">
+                        <input type="radio" name="transportMethod" value="muve" class="hidden">
+                        <span class="block font-medium">มาด้วยรถ Muve Bus</span>
+                        <span class="block text-xs text-gray-500 mt-1">รถออกเวลา 08.30 น. บริเวณหน้าตึก OP</span>
+                    </label>
+
+                    <label class="option-btn text-left px-4">
+                        <input type="radio" name="transportMethod" value="dropoff" class="hidden">
+                        <span class="block font-medium">มีผู้ขับรถมาส่ง</span>
+                    </label>
+
+                    <label class="option-btn text-left px-4">
+                        <input type="radio" name="transportMethod" value="other" id="transportOtherRadio" class="hidden">
+                        <span class="block font-medium">อื่นๆ (โปรดระบุ)</span>
+                    </label>
+
+                    <div id="transportOtherDiv" class="hidden-section mt-2">
+                        <input type="text" id="transportOtherInput" placeholder="ระบุวิธีการเดินทาง..." class="card-input bg-gray-50">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit -->
+            <div class="pt-4">
+                <button type="button" id="submitBtn" class="w-full bg-mahidol-navy text-white font-medium py-3 px-4 rounded-lg shadow-sm hover:bg-blue-900 transition-colors">
+                    บันทึกข้อมูลและส่งคำตอบรับ
+                </button>
+            </div>
+
+        </form>
+
+        <!-- Success Message -->
+        <div id="successMessage" class="hidden-section text-center py-8 fade-in">
+            <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+            </div>
+            <h2 class="text-xl font-bold text-gray-800 mb-2">บันทึกข้อมูลสำเร็จ</h2>
+            <p class="text-sm text-gray-600">ขอบพระคุณสำหรับการตอบรับเข้าร่วมงานค่ะ</p>
+            <button onclick="location.reload()" class="mt-6 text-mahidol-navy text-sm underline">ทำรายการใหม่อีกครั้ง</button>
+        </div>
+
+       <!-- Custom Popup แจ้งเตือนข้อมูลไม่ครบ (แบบคลิกที่ไหนก็ได้เพื่อปิด) -->
+        <div id="customAlert" class="hidden-section fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 cursor-pointer">
+            <div class="bg-white rounded-xl p-10 max-w-md w-full mx-4 text-center shadow-2xl animate-pop cursor-default">
+                <p class="text-[20px] text-gray-800 font-medium">กรุณากรอกข้อมูลให้ครบถ้วน</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Load Scripts -->
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
